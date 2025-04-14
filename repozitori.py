@@ -1,0 +1,12 @@
+import requests
+from bs4 import BeautifulSoup
+
+url = 'https://habr.com/ru/all/'
+response = requests.get(url)
+soup = BeautifulSoup(response.text, 'html.parser')
+
+articles = soup.find_all('h2', class_='tm-title tm-title_h2')
+
+with open('articles.txt', 'w', encoding='utf-8') as file:
+    for article in articles:
+        file.write(article.text.strip() + '\n')
